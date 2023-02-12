@@ -1,4 +1,7 @@
+import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "@mui/material";
 import Head from "next/head";
+import { theme } from "./_theme";
 
 export default function Home() {
   return (
@@ -10,10 +13,9 @@ export default function Home() {
         <link rel="icon" href="/adhikritalogo.ico" />
       </Head>
       <main>
-        <div>
-          <h1>Adhikrita Natural Oil</h1>
-          <h2>Cold press cooking oils</h2>
-        </div>
+        <ThemeProvider theme={theme}>
+          <Navbar />
+        </ThemeProvider>
       </main>
     </>
   );
