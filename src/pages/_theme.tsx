@@ -4,13 +4,13 @@ const themeOptions: ThemeOptions = {
   palette: {
     mode: "light",
     primary: {
-      main: "#00c853",
+      main: "#E7473C",
     },
     secondary: {
-      main: "#ff3d00",
+      main: "#F0F0F0",
     },
     text: {
-      primary: "rgba(0,0,0,0.87)",
+      primary: "#F0F0F0",
     },
   },
 };
