@@ -4,14 +4,12 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { Divider, Link } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const pages = {
   Sales: "/sales",
@@ -20,36 +18,21 @@ const pages = {
   Expenses: "/expenses",
   "Customer Production": "/customer-production",
 };
-const settings = ["Logout"];
 
 function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = React.useState(false);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleOpenNavMenu = () => {
+    setAnchorElNav(!anchorElNav);
   };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* TODO: change to logo */}
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* md and above */}
           <Typography
             variant="h6"
             noWrap
@@ -77,40 +60,12 @@ function Navbar() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              {anchorElNav ? <ClearIcon /> : <MenuIcon />}
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {Object.keys(pages).map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography
-                    component="a"
-                    href={pages[page as keyof typeof pages]}
-                    textAlign="center"
-                  >
-                    {page}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
+          {/* TODO: change to logo */}
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* xs device only */}
           <Typography
             variant="h5"
             noWrap
@@ -127,50 +82,80 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            Adhikrita
           </Typography>
+          {/* md to lg devices */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {Object.keys(pages).map((page) => (
-              <Button
+              <Link
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                color="text.primary"
+                href={pages[page as keyof typeof pages]}
+                underline="none"
+                // variant="h6"
+                noWrap
+                sx={{
+                  mr: 2,
+                  fontWeight: "bold",
+                  fontSize: "1.2rem",
+                }}
               >
                 {page}
-              </Button>
+              </Link>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+            <Button
+              sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+              color="secondary"
+              onClick={() => {
+                // TODO: logout functionality
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              Logout
+            </Button>
           </Box>
         </Toolbar>
+        {/* Open here */}
+        <Divider />
+        {Boolean(anchorElNav) && (
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+              flexDirection: "column",
+              paddingBottom: "0.5rem",
+            }}
+          >
+            {Object.keys(pages).map((page) => (
+              <Box
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "1.2rem",
+                  padding: "0 0.8rem",
+                  ":hover": {
+                    opacity: 0.6,
+                  },
+                }}
+                key={page}
+              >
+                <Link
+                  color="text.primary"
+                  href={pages[page as keyof typeof pages]}
+                  underline="none"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    margin: "0.8rem",
+                  }}
+                >
+                  {page}
+                </Link>
+              </Box>
+            ))}
+          </Box>
+        )}
       </Container>
     </AppBar>
   );
