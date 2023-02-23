@@ -1,4 +1,6 @@
+import LoggedInLayout from "@/components/LoggedInLayout";
 import { Container } from "@mui/material";
+import { ReactElement } from "react";
 
 export default function Production() {
   return (
@@ -7,3 +9,7 @@ export default function Production() {
     </Container>
   );
 }
+
+Production.getLayout = function getLayout(page: ReactElement) {
+  return <LoggedInLayout>{page}</LoggedInLayout>;
+};
